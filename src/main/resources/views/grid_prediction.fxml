@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.beans.property.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.kad.controller.GridMindPredictionController"
+          style="-fx-background-color: #f5f5f5;">
+
+    <!-- ✅ Partie haute : Titre et noms -->
+<top>
+    <VBox spacing="10" style="-fx-padding: 15;">
+        <!-- Pronostic (remonté) -->
+        <HBox spacing="10">
+            <Label text="Pronostic:" style="-fx-font-weight: bold;" />
+            <TextField fx:id="predictionNameField" />
+        </HBox>
+    </VBox>
+</top>
+
+    <!-- ✅ Partie centrale : SplitPane avec items -->
+    <center>
+        <SplitPane orientation="HORIZONTAL" dividerPositions="0.6">
+            <items>
+                <!-- ✅ Partie gauche : Liste des matchs -->
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Label text="Liste des Matchs" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <!-- ✅ Remplacement de la TableView par une VBox pour les matchs -->
+                    <VBox fx:id="matchesContainer" spacing="5" style="-fx-padding: 10;" />
+                </VBox>
+
+                <!-- ✅ Partie droite : Fourchettes et synthèse -->
+                <VBox spacing="15" style="-fx-padding: 10;">
+                    <!-- Fourchettes de Pronostics -->
+                    <Label text="Fourchettes de Pronostics" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <GridPane hgap="10" vgap="10">
+                        <Label text="Victoires Domicile (min)" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="minHomeWinField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="60"/>
+                        <Label text="Victoires Domicile (max)" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <TextField fx:id="maxHomeWinField" GridPane.rowIndex="0" GridPane.columnIndex="3" prefWidth="60"/>
+
+                        <Label text="Matchs Nuls (min)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="minDrawField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="60"/>
+                        <Label text="Matchs Nuls (max)" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                        <TextField fx:id="maxDrawField" GridPane.rowIndex="1" GridPane.columnIndex="3" prefWidth="60"/>
+
+                        <Label text="Victoires Extérieur (min)" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="minAwayWinField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="60"/>
+                        <Label text="Victoires Extérieur (max)" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                        <TextField fx:id="maxAwayWinField" GridPane.rowIndex="2" GridPane.columnIndex="3" prefWidth="60"/>
+                    </GridPane>
+
+                    <Separator />
+
+                    <!-- Fourchettes de Côtes -->
+                    <Label text="Fourchettes de Côtes" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <GridPane hgap="10" vgap="10">
+                        <Label text="Côte Minimale" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="minOddField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="60"/>
+                        <Label text="Côte Maximale" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <TextField fx:id="maxOddField" GridPane.rowIndex="0" GridPane.columnIndex="3" prefWidth="60"/>
+                    </GridPane>
+
+                    <Separator />
+
+                    <!-- Garantie -->
+                    <Label text="Garantie" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Type de garantie :"/>
+                        <ComboBox fx:id="guaranteeTypeComboBox" prefWidth="100" />
+                        <Label text="Pourcentage :"/>
+                        <TextField fx:id="guaranteePercentageField" prefWidth="60" promptText="Ex: 100"/>
+                        <Label text="\%"/>
+                    </HBox>
+
+                    <Separator />
+
+                    <!-- Synthèse de la grille -->
+                    <Label text="Synthèse de votre grille" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <VBox spacing="5">
+                        <HBox spacing="10">
+                            <Label text="Simples:"/>
+                            <Label fx:id="simplesLabel" text="0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+                        <HBox spacing="10">
+                            <Label text="Doubles:"/>
+                            <Label fx:id="doublesLabel" text="0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+                        <HBox spacing="10">
+                            <Label text="Triples:"/>
+                            <Label fx:id="triplesLabel" text="0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+                        <HBox spacing="10">
+                            <Label text="Nombre de combinaisons:"/>
+                            <Label fx:id="combinationsLabel" text="0" style="-fx-font-weight: bold;"/>
+                        </HBox>
+                        <HBox spacing="10">
+                            <Label text="Fourchette de côtes:"/>
+                            <Label fx:id="minOddsLabel" text="0.00" style="-fx-font-weight: bold;"/>
+                            <Label text=" - "/>
+                            <Label fx:id="maxOddsLabel" text="0.00" style="-fx-font-weight: bold;"/>
+                        </HBox>
+                        <HBox spacing="10">
+        					<Label text="Grilles générées:"/>
+        					<Label fx:id="summarySimpleGridNumber" text="0" style="-fx-font-weight: bold;"/>
+    					</HBox>
+                    </VBox>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+
+    <!-- ✅ Partie basse : Boutons -->
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10;">
+            <Button text="Annuler" onAction="#handleCancel" cancelButton="true"/>
+            <Button text="Sauvegarder" onAction="#savePredictions" defaultButton="true"
+                    style="-fx-base: #2ecc71; -fx-text-fill: white;"/>
+            <Button text="Générer Grilles" fx:id="generateGridsButton" onAction="#handleGenerateGrids"
+                    style="-fx-base: #3498db; -fx-text-fill: white;"/>
+            <Button text="Voir les grilles" onAction="#handleViewGrids" />
+            <Button text="Fermer" onAction="#handleClose" />
+        </HBox>
+    </bottom>
+</BorderPane>
